@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getAdminSession } from '../../../lib/admin-auth';
 import { getDb } from '../../../lib/db';
 import { extractGtmId } from '../../../lib/content';
-const keys=['gtm_input','meta_pixel_id','ga4_id','global_head_code','global_body_start_code','global_body_end_code'];
+const keys=['gtm_input','meta_pixel_id','ga4_id','global_head_code','global_body_start_code','global_body_end_code','footer_enabled','footer_mode','footer_text','footer_url','footer_bg','footer_color','footer_height','footer_radius','footer_font_size'];
 export async function PUT(req){
   if(!getAdminSession())return NextResponse.json({error:'Unauthorized'},{status:401});
   try{
