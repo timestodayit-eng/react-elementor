@@ -47,7 +47,18 @@ function InnerSection({element,preview=false}){
 
 function Section({section,preview=false}){
   const s=section.settings||{};
-  return <section className={`lc-section ${anim(s)} ${s.customClass||''}`} style={{background:s.backgroundColor||'#fff',padding:`${Number(s.paddingTop??64)}px ${Number(s.paddingRight??24)}px ${Number(s.paddingBottom??64)}px ${Number(s.paddingLeft??24)}px`,marginTop:px(s.marginTop),marginBottom:px(s.marginBottom),borderRadius:px(s.borderRadius)}}>
+  const minHeight=s.minHeightMode==='screen'?'100vh':s.minHeightMode==='custom'?`${Number(s.minHeight||0)}px`:undefined;
+  const style={
+    background:s.backgroundColor||'#fff',
+    padding:`${Number(s.paddingTop??64)}px ${Number(s.paddingRight??24)}px ${Number(s.paddingBottom??64)}px ${Number(s.paddingLeft??24)}px`,
+    marginTop:px(s.marginTop),marginBottom:px(s.marginBottom),borderRadius:px(s.borderRadius),minHeight,
+    '--lc-mobile-pt':`${Number(s.mobilePaddingTop??s.paddingTop??64)}px`,
+    '--lc-mobile-pr':`${Number(s.mobilePaddingRight??16)}px`,
+    '--lc-mobile-pb':`${Number(s.mobilePaddingBottom??s.paddingBottom??64)}px`,
+    '--lc-mobile-pl':`${Number(s.mobilePaddingLeft??16)}px`,
+    '--lc-mobile-gap':`${Number(s.mobileGap??s.gap??20)}px`
+  };
+  return <section className={`lc-section ${anim(s)} ${s.customClass||''}`} style={style}>
     <div className="lc-section-inner" style={{maxWidth:`${Number(s.contentWidth||1100)}px`,margin:'0 auto',display:'flex',flexWrap:'wrap',gap:px(s.gap||20),alignItems:'stretch'}}>
       {(section.columns||[]).map((column,i)=><Column key={column.id||i} column={column} preview={preview}/>) }
     </div>
